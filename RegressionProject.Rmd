@@ -1,0 +1,38 @@
+---
+title: "Regression Project"
+output: html_document
+---
+
+#Executive Summary
+
+Overall my analysis tells me the transmission type doesn't really have a significant impact on the fuel economy of a car once you account for other factors, such as weight and number of cyllinders.
+
+
+
+
+
+
+
+#Results
+
+```{r}
+mtcars$am <- factor(mtcars$am, levels=c(0, 1), labels=c('Auto', 'Man'))
+mtcars$vs <- factor(mtcars$vs, levels=c(0, 1), labels=c('V', 'S'))
+lm1 <- lm(mpg ~ am + wt, mtcars)
+summary(lm1)
+lm2 <- lm(mpg ~ vs + wt + cyl, mtcars)
+summary(lm2)
+```
+
+The model above shows that weight has a clear negative effect on the miles per gallon. There is a drop of 5.35 miles per gallon for every additional 1000 pounds of weight. However no significant changed is incurred due to the type of transmission.
+
+In the second model, the transmission type doesn't have much impact once you account for weight and number of cyllinders, as the coefficients suggest.
+
+```{r}
+library(car)
+scatterplot(mpg ~ wt | am, data=mtcars, 
+  	xlab="Weight", ylab="Miles Per Gallon", 
+   main="Scatter Plot", 
+   labels=row.names(mtcars))
+```
+
